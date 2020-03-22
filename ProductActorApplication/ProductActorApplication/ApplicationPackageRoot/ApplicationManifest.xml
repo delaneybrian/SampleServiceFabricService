@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ProductActorApplicationType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="ProductApi_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
+    <Parameter Name="ProductApi_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="ProductActorServiceActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="ProductActorServiceActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ProductActorServiceActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="DbConfig" DefaultValue="" />
+  </Parameters>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ProductApiPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[ProductApi_ASPNETCORE_ENVIRONMENT]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ProductActorServicePkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="Database">
+            <Parameter Name="DbConfig" Value="[DbConfig]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="DbPort" Value="8000" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
+  <DefaultServices>
+    <Service Name="ProductApi" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="ProductApiType" InstanceCount="[ProductApi_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="ProductActorServiceActorService" GeneratedIdRef="ef9ef856-4aaa-41ef-9be2-dca9642a1ca7|Persisted">
+      <StatefulService ServiceTypeName="ProductActorServiceActorServiceType" TargetReplicaSetSize="[ProductActorServiceActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ProductActorServiceActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[ProductActorServiceActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+  </DefaultServices>
+</ApplicationManifest>

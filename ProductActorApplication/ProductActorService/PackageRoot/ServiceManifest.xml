@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="ProductActorServicePkg" Version="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <ServiceTypes>
+    <StatefulServiceType ServiceTypeName="ProductActorServiceActorServiceType" HasPersistedState="true">
+      <Extensions>
+        <Extension Name="__GeneratedServiceType__" GeneratedId="ef9ef856-4aaa-41ef-9be2-dca9642a1ca7|Persisted">
+          <GeneratedNames xmlns="http://schemas.microsoft.com/2015/03/fabact-no-schema">
+            <DefaultService Name="ProductActorServiceActorService" />
+            <ReplicatorEndpoint Name="ProductActorServiceActorServiceReplicatorEndpoint" />
+            <ReplicatorConfigSection Name="ProductActorServiceActorServiceReplicatorConfig" />
+            <ReplicatorSecurityConfigSection Name="ProductActorServiceActorServiceReplicatorSecurityConfig" />
+            <StoreConfigSection Name="ProductActorServiceActorServiceLocalStoreConfig" />
+            <ServiceEndpointV2_1 Name="ProductActorServiceActorServiceEndpointV2_1" />
+          </GeneratedNames>
+        </Extension>
+      </Extensions>
+    </StatefulServiceType>
+  </ServiceTypes>
+  <CodePackage Name="Code" Version="1.0.0">
+    <EntryPoint>
+      <ExeHost>
+        <Program>ProductActorService.exe</Program>
+      </ExeHost>
+    </EntryPoint>
+    <EnvironmentVariables>
+      <EnvironmentVariable Name="DbPort" Value="" />
+    </EnvironmentVariables>
+  </CodePackage>
+  <ConfigPackage Name="Config" Version="1.0.0" />
+  <DataPackage Name="Data" Version="1.0.0" />
+  <Resources>
+    <Endpoints>
+      <Endpoint Name="ProductActorServiceActorServiceEndpointV2_1" />
+      <Endpoint Name="ProductActorServiceActorServiceReplicatorEndpoint" />
+    </Endpoints>
+  </Resources>
+  <!-- The content will be generated during build -->
+</ServiceManifest>
